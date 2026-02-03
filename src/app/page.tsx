@@ -50,16 +50,27 @@ export default function Home() {
   }, [previewHtml]);
 
   const downloadPdf = useCallback(async () => {
-    const iframe = iframeRef.current;
-    if (!iframe?.contentDocument?.body || !previewHtml) return;
+    if (!previewHtml) return;
     setPdfLoading(true);
     setError(null);
+    const blobUrl = URL.createObjectURL(
+      new Blob([previewHtml], { type: "text/html;charset=utf-8" })
+    );
+    const tempIframe = document.createElement("iframe");
+    tempIframe.setAttribute("style", "position:absolute;width:0;height:0;border:0;visibility:hidden");
+    tempIframe.sandbox.add("allow-same-origin");
+    document.body.appendChild(tempIframe);
     try {
-      // Pequena espera para o Tailwind (CDN) aplicar no iframe
-      await new Promise((r) => setTimeout(r, 500));
-      const html2pdf = (await import("html2pdf.js")).default;
-      const element = iframe.contentDocument?.body;
+      await new Promise<void>((resolve, reject) => {
+        tempIframe.onload = () => resolve();
+        tempIframe.onerror = () => reject(new Error("Falha ao carregar o documento"));
+        tempIframe.src = blobUrl;
+      });
+      await new Promise((r) => setTimeout(r, 300));
+      const doc = tempIframe.contentDocument;
+      const element = doc?.body;
       if (!element) throw new Error("Preview não disponível");
+      const html2pdf = (await import("html2pdf.js")).default;
       await html2pdf()
         .set({
           margin: 10,
@@ -75,6 +86,8 @@ export default function Home() {
         e instanceof Error ? e.message : "Erro ao gerar PDF. Tente novamente."
       );
     } finally {
+      URL.revokeObjectURL(blobUrl);
+      tempIframe.remove();
       setPdfLoading(false);
     }
   }, [previewHtml]);
