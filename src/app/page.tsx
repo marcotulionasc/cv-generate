@@ -66,9 +66,9 @@ export default function Home() {
         tempIframe.onerror = () => reject(new Error("Falha ao carregar o documento"));
         tempIframe.src = blobUrl;
       });
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 500));
       const doc = tempIframe.contentDocument;
-      const element = doc?.body;
+      const element = doc?.querySelector(".cv-article") ?? doc?.body;
       if (!element) throw new Error("Preview não disponível");
       const html2pdf = (await import("html2pdf.js")).default;
       await html2pdf()

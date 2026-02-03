@@ -6,15 +6,16 @@
   <title>{{nome}} - Currículo</title>
   <!-- Apenas hex/rgb simples (sem lab/oklch/rgba) para html2canvas/PDF -->
   <style>
-    * { box-sizing: border-box; color: #1e293b; background-color: transparent; }
+    * { box-sizing: border-box; color: #1e293b; }
     body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #1e293b; }
     .cv-article { max-width: 56rem; margin: 2rem auto; background: #ffffff; box-shadow: 0 10px 30px #d1d5db; border-radius: 0.5rem; overflow: hidden; }
-    .cv-header { background: #0f172a; color: #fff; padding: 2.5rem 2rem; }
-    .cv-header h1 { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+    .cv-header { background: #0f172a; background-color: #0f172a; color: #fff; padding: 2.5rem 2rem; }
+    .cv-header h1 { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; color: #ffffff; }
     .cv-header .subtitle { color: #cbd5e1; font-size: 1.125rem; margin-top: 0.25rem; }
     .cv-header .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin-top: 1.5rem; font-size: 0.875rem; color: #cbd5e1; }
     .cv-header .links a { color: #cbd5e1; text-decoration: none; }
     .cv-header .links a:hover { color: #fff; }
+    .cv-header .links span { color: #cbd5e1; }
     .cv-body { padding: 2rem; }
     .cv-body > * + * { margin-top: 2rem; }
     .cv-section h2 { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin: 0 0 1rem 0; }
@@ -47,7 +48,7 @@
 <body>
   <article class="cv-article">
     {{!-- Header com nome e contato --}}
-    <header class="cv-header">
+    <header class="cv-header" style="background-color:#0f172a;color:#fff">
       <h1>{{nome}}</h1>
       {{#if titulo}}
         <p class="subtitle">{{titulo}}</p>
