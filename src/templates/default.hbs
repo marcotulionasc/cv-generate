@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{nome}} - Currículo</title>
+  <!-- CSS com cores em hex (sem lab/oklch) para compatibilidade com geração de PDF -->
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: #f8fafc; color: #1e293b; }
+    .cv-article { max-width: 56rem; margin: 2rem auto; background: #fff; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); border-radius: 0.5rem; overflow: hidden; }
+    .cv-header { background: #0f172a; color: #fff; padding: 2.5rem 2rem; }
+    .cv-header h1 { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; }
+    .cv-header .subtitle { color: #cbd5e1; font-size: 1.125rem; margin-top: 0.25rem; }
+    .cv-header .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin-top: 1.5rem; font-size: 0.875rem; color: #cbd5e1; }
+    .cv-header .links a { color: #cbd5e1; text-decoration: none; }
+    .cv-header .links a:hover { color: #fff; }
+    .cv-body { padding: 2rem; }
+    .cv-body > * + * { margin-top: 2rem; }
+    .cv-section h2 { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin: 0 0 1rem 0; }
+    .cv-section p { color: #334155; line-height: 1.625; margin: 0; }
+    .cv-section .space-y-6 > * + * { margin-top: 1.5rem; }
+    .cv-section .space-y-4 > * + * { margin-top: 1rem; }
+    .cv-section .space-y-3 > * + * { margin-top: 0.75rem; }
+    .cv-section .space-y-2 > * + * { margin-top: 0.5rem; }
+    .cv-section .space-y-1 > * + * { margin-top: 0.25rem; }
+    .cv-job { border-left: 2px solid #e2e8f0; padding-left: 1.25rem; }
+    .cv-job .row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+    .cv-job h3 { font-weight: 600; color: #0f172a; margin: 0; }
+    .cv-job .period { font-size: 0.875rem; color: #64748b; }
+    .cv-job .company { color: #475569; font-weight: 500; margin-top: 0.25rem; }
+    .cv-job .desc { color: #334155; margin-top: 0.5rem; font-size: 0.875rem; }
+    .cv-job ul { margin: 0.5rem 0 0 0; padding-left: 1rem; font-size: 0.875rem; color: #334155; list-style: disc inside; }
+    .cv-edu h3 { font-weight: 600; color: #0f172a; margin: 0; }
+    .cv-edu .meta { color: #475569; font-size: 0.875rem; margin-top: 0.25rem; }
+    .cv-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .cv-skill { display: inline-block; padding: 0.25rem 0.75rem; background: #f1f5f9; color: #334155; border-radius: 9999px; font-size: 0.875rem; }
+    .cv-skill-sm { padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; }
+    .cv-list { color: #334155; list-style: none; padding: 0; margin: 0; }
+    .cv-list li { margin-top: 0.25rem; }
+    .cv-list li:first-child { margin-top: 0; }
+    .cv-link { font-weight: 600; color: #0f172a; text-decoration: none; }
+    .cv-link:hover { color: #475569; }
+    .cv-cat { font-size: 0.875rem; font-weight: 500; color: #475569; margin-bottom: 0.25rem; }
+  </style>
+</head>
+<body>
+  <article class="max-w-4xl mx-auto my-8 md:my-12 bg-white shadow-xl rounded-lg overflow-hidden">
+    {{!-- Header com nome e contato --}}
+    <header class="bg-slate-900 text-white px-8 py-10 md:py-12">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight">{{nome}}</h1>
+      {{#if titulo}}
+        <p class="text-slate-300 text-lg mt-1">{{titulo}}</p>
+      {{/if}}
+      <div class="flex flex-wrap gap-x-6 gap-y-1 mt-6 text-slate-300 text-sm">
+        <a href="mailto:{{email}}" class="hover:text-white transition-colors">{{email}}</a>
+        {{#if telefone}}<span>{{telefone}}</span>{{/if}}
+        {{#if localizacao}}<span>{{localizacao}}</span>{{/if}}
+        {{#if linkedin}}<a href="https://{{linkedin}}" target="_blank" rel="noopener" class="hover:text-white transition-colors">LinkedIn</a>{{/if}}
+        {{#if github}}<a href="https://{{github}}" target="_blank" rel="noopener" class="hover:text-white transition-colors">GitHub</a>{{/if}}
+        {{#if website}}<a href="{{website}}" target="_blank" rel="noopener" class="hover:text-white transition-colors">Website</a>{{/if}}
+      </div>
+    </header>
+
+    <div class="px-8 py-8 md:py-10 space-y-8">
+      {{!-- Resumo --}}
+      {{#if resumo}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Resumo</h2>
+          <p class="text-slate-700 leading-relaxed">{{resumo}}</p>
+        </section>
+      {{/if}}
+
+      {{!-- Experiência --}}
+      {{#if experiencias}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Experiência profissional</h2>
+          <div class="space-y-6">
+            {{#each experiencias}}
+              <div class="border-l-2 border-slate-200 pl-5">
+                <div class="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 class="font-semibold text-slate-900">{{cargo}}</h3>
+                  <span class="text-sm text-slate-500">{{periodo}}</span>
+                </div>
+                <p class="text-slate-600 font-medium">{{empresa}}{{#if local}} · {{local}}{{/if}}</p>
+                {{#if descricao}}
+                  <p class="text-slate-700 mt-2 text-sm leading-relaxed">{{descricao}}</p>
+                {{/if}}
+                {{#if conquistas}}
+                  <ul class="mt-2 space-y-1 text-sm text-slate-700 list-disc list-inside">
+                    {{#each conquistas}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                  </ul>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+        </section>
+      {{/if}}
+
+      {{!-- Formação --}}
+      {{#if formacao}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Formação</h2>
+          <div class="space-y-4">
+            {{#each formacao}}
+              <div>
+                <h3 class="font-semibold text-slate-900">{{curso}}</h3>
+                <p class="text-slate-600 text-sm">{{instituicao}} · {{periodo}}</p>
+                {{#if descricao}}<p class="text-slate-700 text-sm mt-1">{{descricao}}</p>{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        </section>
+      {{/if}}
+
+      {{!-- Habilidades (lista simples) --}}
+      {{#if habilidadesLista}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Habilidades</h2>
+          <div class="flex flex-wrap gap-2">
+            {{#each habilidadesLista}}
+              <span class="inline-block px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">{{this}}</span>
+            {{/each}}
+          </div>
+        </section>
+      {{/if}}
+      {{!-- Habilidades por categoria --}}
+      {{#if habilidadesCategorias}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Habilidades</h2>
+          <div class="space-y-3">
+            {{#each habilidadesCategorias}}
+              <div>
+                <p class="text-sm font-medium text-slate-600">{{categoria}}</p>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  {{#each itens}}
+                    <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-sm">{{this}}</span>
+                  {{/each}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </section>
+      {{/if}}
+
+      {{!-- Idiomas --}}
+      {{#if idiomas}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Idiomas</h2>
+          <ul class="space-y-1 text-slate-700">
+            {{#each idiomas}}
+              <li><span class="font-medium">{{idioma}}</span> — {{nivel}}</li>
+            {{/each}}
+          </ul>
+        </section>
+      {{/if}}
+
+      {{!-- Projetos --}}
+      {{#if projetos}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Projetos</h2>
+          <div class="space-y-4">
+            {{#each projetos}}
+              <div>
+                {{#if link}}
+                  <a href="{{link}}" target="_blank" rel="noopener" class="font-semibold text-slate-900 hover:text-slate-600">{{nome}}</a>
+                {{else}}
+                  <h3 class="font-semibold text-slate-900">{{nome}}</h3>
+                {{/if}}
+                {{#if descricao}}<p class="text-slate-700 text-sm mt-1">{{descricao}}</p>{{/if}}
+                {{#if tecnologias}}
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    {{#each tecnologias}}
+                      <span class="text-xs px-2 py-0.5 bg-slate-100 rounded">{{this}}</span>
+                    {{/each}}
+                  </div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+        </section>
+      {{/if}}
+
+      {{!-- Certificações --}}
+      {{#if certificacoes}}
+        <section>
+          <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2 mb-4">Certificações</h2>
+          <ul class="space-y-2 text-slate-700">
+            {{#each certificacoes}}
+              <li>
+                {{#if link}}<a href="{{link}}" target="_blank" rel="noopener" class="hover:underline">{{nome}}</a>{{else}}{{nome}}{{/if}}
+                {{#if emissor}} · {{emissor}}{{/if}}{{#if ano}} ({{ano}}){{/if}}
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+      {{/if}}
+    </div>
+  </article>
+</body>
+</html>
