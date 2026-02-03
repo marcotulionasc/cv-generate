@@ -68,7 +68,8 @@ export default function Home() {
       });
       await new Promise((r) => setTimeout(r, 500));
       const doc = tempIframe.contentDocument;
-      const element = doc?.querySelector(".cv-article") ?? doc?.body;
+      const raw = doc?.querySelector(".cv-article") ?? doc?.body;
+      const element = raw instanceof HTMLElement ? raw : null;
       if (!element) throw new Error("Preview não disponível");
       const html2pdf = (await import("html2pdf.js")).default;
       await html2pdf()
