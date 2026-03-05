@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Gerador de CV | Template .hbs + Tailwind",
-  description: "Gere currículos profissionais com templates Handlebars e Tailwind CSS",
+  description:
+    "Gere currículos profissionais com templates Handlebars e Tailwind CSS",
 };
 
 export default function RootLayout({

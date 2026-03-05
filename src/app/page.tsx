@@ -26,7 +26,10 @@ function FileUploadZone({ onFile }: { onFile: (content: string) => void }) {
   return (
     <div
       onClick={() => inputRef.current?.click()}
-      onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
       onDragLeave={() => setDragging(false)}
       onDrop={onDrop}
       className={`flex cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed px-4 py-3 text-sm transition-colors ${
@@ -35,16 +38,32 @@ function FileUploadZone({ onFile }: { onFile: (content: string) => void }) {
           : "border-slate-300 bg-slate-50 text-slate-500 hover:border-slate-400 hover:bg-slate-100"
       }`}
     >
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+      <svg
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={1.5}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
+        />
       </svg>
-      <span>Soltar arquivo ou <span className="font-medium text-violet-600">escolher</span></span>
+      <span>
+        Soltar arquivo ou{" "}
+        <span className="font-medium text-violet-600">escolher</span>
+      </span>
       <input
         ref={inputRef}
         type="file"
         accept=".md,.json,.txt"
         className="sr-only"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) handleFile(f);
+        }}
       />
     </div>
   );
@@ -52,7 +71,9 @@ function FileUploadZone({ onFile }: { onFile: (content: string) => void }) {
 
 export default function Home() {
   const [mode, setMode] = useState<InputMode>("markdown");
-  const [jsonInput, setJsonInput] = useState(() => JSON.stringify(cvExemplo, null, 2));
+  const [jsonInput, setJsonInput] = useState(() =>
+    JSON.stringify(cvExemplo, null, 2),
+  );
   const [mdInput, setMdInput] = useState(cvExemploMd);
   const [previewHtml, setPreviewHtml] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -151,7 +172,7 @@ export default function Home() {
         setError("Arquivo JSON inválido.");
       }
     },
-    [mode]
+    [mode],
   );
 
   const currentInput = mode === "markdown" ? mdInput : jsonInput;
@@ -164,11 +185,16 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-violet-600 text-white text-xs font-bold">CV</span>
-              <h1 className="text-lg font-bold tracking-tight">Gerador de CV</h1>
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-violet-600 text-white text-xs font-bold">
+                CV
+              </span>
+              <h1 className="text-lg font-bold tracking-tight">
+                Gerador de CV
+              </h1>
             </div>
             <p className="mt-0.5 text-xs text-slate-500">
-              Escreva em Markdown ou JSON · Preview instantâneo · PDF via Puppeteer
+              Escreva em Markdown ou JSON · Preview instantâneo · PDF via
+              Puppeteer
             </p>
           </div>
 
@@ -187,23 +213,58 @@ export default function Home() {
               >
                 {pdfLoading ? (
                   <>
-                    <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    <svg
+                      className="h-4 w-4 animate-spin"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
                     </svg>
                     Gerando PDF…
                   </>
                 ) : pdfSuccess ? (
                   <>
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                     Baixado!
                   </>
                 ) : (
                   <>
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                      />
                     </svg>
                     Baixar PDF
                   </>
@@ -227,9 +288,10 @@ export default function Home() {
                   key={m}
                   onClick={() => setMode(m)}
                   className={`relative px-5 py-2 text-sm font-medium transition-colors select-none
-                    ${mode === m
-                      ? "border border-b-white border-slate-200 bg-white text-violet-600 rounded-t-lg -mb-px z-10"
-                      : "text-slate-400 hover:text-slate-700"
+                    ${
+                      mode === m
+                        ? "border border-b-white border-slate-200 bg-white text-violet-600 rounded-t-lg -mb-px z-10"
+                        : "text-slate-400 hover:text-slate-700"
                     }`}
                 >
                   {m === "markdown" ? "📝 .md" : "{ } JSON"}
@@ -247,17 +309,46 @@ export default function Home() {
               >
                 {loadingPreview ? (
                   <>
-                    <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    <svg
+                      className="h-4 w-4 animate-spin"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
                     </svg>
                     Gerando…
                   </>
                 ) : (
                   <>
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
                     </svg>
                     Gerar preview
                   </>
@@ -272,15 +363,29 @@ export default function Home() {
               value={currentInput}
               onChange={(e) => setCurrentInput(e.target.value)}
               className="min-h-[540px] w-full rounded-b-lg rounded-tr-lg bg-white p-4 font-mono text-sm text-slate-800 focus:outline-none resize-none"
-              placeholder={mode === "markdown" ? "# Seu Nome\n> Título\n\n**Email:** ..." : '{"nome": "...", "email": "..."}'}
+              placeholder={
+                mode === "markdown"
+                  ? "# Seu Nome\n> Título\n\n**Email:** ..."
+                  : '{"nome": "...", "email": "..."}'
+              }
               spellCheck={false}
             />
           </div>
 
           {error && (
             <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-              <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              <svg
+                className="mt-0.5 h-4 w-4 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
               </svg>
               {error}
             </div>
@@ -335,7 +440,9 @@ Technologies: React, TypeScript
         {/* Right: Preview */}
         <section className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Preview</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">
+              Preview
+            </h2>
             {previewHtml && (
               <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700">
                 Pronto
@@ -353,12 +460,26 @@ Technologies: React, TypeScript
               />
             ) : (
               <div className="flex h-full min-h-[600px] flex-col items-center justify-center gap-3 text-slate-300">
-                <svg className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                <svg
+                  className="h-12 w-12"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                  />
                 </svg>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-slate-400">Nenhum preview gerado</p>
-                  <p className="text-xs text-slate-300">Clique em &quot;Gerar preview&quot; para ver o CV aqui</p>
+                  <p className="text-sm font-medium text-slate-400">
+                    Nenhum preview gerado
+                  </p>
+                  <p className="text-xs text-slate-300">
+                    Clique em &quot;Gerar preview&quot; para ver o CV aqui
+                  </p>
                 </div>
               </div>
             )}

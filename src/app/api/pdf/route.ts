@@ -9,12 +9,19 @@ export async function POST(request: NextRequest) {
   try {
     const { html } = await request.json();
     if (!html || typeof html !== "string") {
-      return NextResponse.json({ error: "Campo 'html' obrigatório" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Campo 'html' obrigatório" },
+        { status: 400 },
+      );
     }
 
     browser = await puppeteer.launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+      ],
     });
 
     const page = await browser.newPage();
@@ -36,7 +43,7 @@ export async function POST(request: NextRequest) {
     console.error("Erro ao gerar PDF:", err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Erro ao gerar PDF" },
-      { status: 500 }
+      { status: 500 },
     );
   } finally {
     await browser?.close();

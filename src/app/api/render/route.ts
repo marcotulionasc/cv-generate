@@ -9,7 +9,10 @@ export async function POST(request: NextRequest) {
 
     let data: CVData;
 
-    if (contentType.includes("text/markdown") || contentType.includes("text/plain")) {
+    if (
+      contentType.includes("text/markdown") ||
+      contentType.includes("text/plain")
+    ) {
       const md = await request.text();
       data = parseMdToCv(md);
     } else {
@@ -24,7 +27,7 @@ export async function POST(request: NextRequest) {
     if (!data?.nome || !data?.email) {
       return NextResponse.json(
         { error: "Campos obrigatórios: nome, email" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -36,7 +39,7 @@ export async function POST(request: NextRequest) {
     console.error("Erro ao renderizar CV:", err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Erro ao renderizar CV" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
