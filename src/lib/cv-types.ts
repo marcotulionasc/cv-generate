@@ -11,6 +11,7 @@ export interface CVData {
   localizacao?: string;
   linkedin?: string;
   github?: string;
+  instagram?: string;
   website?: string;
   resumo?: string;
 
@@ -75,25 +76,25 @@ export interface Certificacao {
 
 /** Dados de exemplo para preview */
 export const cvExemplo: CVData = {
-  nome: "Seu Nome Completo",
+  nome: "Marco Nascimento",
   titulo: "Desenvolvedor Full Stack",
-  email: "seu@email.com",
-  telefone: "+55 11 99999-9999",
-  localizacao: "São Paulo, SP",
-  linkedin: "linkedin.com/in/seu-perfil",
-  github: "github.com/seu-usuario",
+  email: "marco@levacode.com.br",
+  telefone: "+55 19 99760-2293",
+  localizacao: "Campinas, SP",
+  linkedin: "linkedin.com/in/marcotulionasc",
+  instagram: "instagram.com/umarco.tech",
   resumo:
-    "Profissional com X anos de experiência em desenvolvimento web. Foco em React, Node.js e arquitetura de sistemas escaláveis.",
+    "Desenvolvedor Full Stack apaixonado por criar produtos digitais com foco em experiência do usuário e arquitetura escalável.",
   experiencias: [
     {
-      empresa: "Empresa Exemplo Ltda",
-      cargo: "Desenvolvedor Sênior",
-      periodo: "2022 - Presente",
-      local: "São Paulo, SP",
-      descricao: "Liderança técnica em projetos de alto impacto.",
+      empresa: "Leva Code",
+      cargo: "Fundador & Desenvolvedor Full Stack",
+      periodo: "2023 - Presente",
+      local: "Campinas, SP",
+      descricao: "Desenvolvimento de produtos digitais e soluções web para clientes.",
       conquistas: [
-        "Redução de 40% no tempo de deploy com CI/CD",
-        "Mentoria de 3 desenvolvedores juniores",
+        "Lançamento de plataformas web com Next.js e Node.js",
+        "Mentoria e entrega de projetos end-to-end",
       ],
     },
   ],
@@ -101,30 +102,28 @@ export const cvExemplo: CVData = {
     {
       instituicao: "Universidade Exemplo",
       curso: "Bacharelado em Ciência da Computação",
-      periodo: "2016 - 2020",
+      periodo: "2019 - 2023",
     },
   ],
   habilidades: [
     "JavaScript",
     "TypeScript",
     "React",
+    "Next.js",
     "Node.js",
     "PostgreSQL",
     "Tailwind CSS",
   ],
   idiomas: [
     { idioma: "Português", nivel: "Nativo" },
-    { idioma: "Inglês", nivel: "Fluente" },
+    { idioma: "Inglês", nivel: "Intermediário" },
   ],
   projetos: [
     {
-      nome: "Projeto Open Source",
-      descricao: "Ferramenta para desenvolvedores.",
-      link: "https://github.com/...",
-      tecnologias: ["React", "TypeScript"],
+      nome: "CV Generator",
+      descricao: "Gerador de currículo profissional a partir de Markdown ou JSON.",
+      tecnologias: ["Next.js", "TypeScript", "Puppeteer"],
     },
   ],
-  certificacoes: [
-    { nome: "AWS Certified Developer", emissor: "Amazon", ano: "2023" },
-  ],
+  certificacoes: [],
 };

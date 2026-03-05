@@ -48,6 +48,7 @@ function parseHeader(headerText: string): Partial<CVData> {
       else if (["location", "localizacao", "localização"].includes(key)) result.localizacao = value;
       else if (key === "linkedin") result.linkedin = value;
       else if (key === "github") result.github = value;
+      else if (key === "instagram") result.instagram = value;
       else if (["website", "site"].includes(key)) result.website = value;
     }
   }
@@ -273,48 +274,43 @@ export function parseMdToCv(md: string): CVData {
   return result;
 }
 
-export const cvExemploMd = `# Seu Nome Completo
+export const cvExemploMd = `# Marco Nascimento
 > Desenvolvedor Full Stack
 
-**Email:** seu@email.com | **Telefone:** +55 11 99999-9999 | **Localização:** São Paulo, SP
-**LinkedIn:** linkedin.com/in/seu-perfil | **GitHub:** github.com/seu-usuario
+**Email:** marco@levacode.com.br | **Telefone:** +55 19 99760-2293 | **Localização:** Campinas, SP
+**LinkedIn:** linkedin.com/in/marcotulionasc | **Instagram:** instagram.com/umarco.tech
 
 ## Resumo
 
-Profissional com X anos de experiência em desenvolvimento web. Foco em React, Node.js e arquitetura de sistemas escaláveis.
+Desenvolvedor Full Stack apaixonado por criar produtos digitais com foco em experiência do usuário e arquitetura escalável.
 
 ## Experiência
 
-### Desenvolvedor Sênior @ Empresa Exemplo Ltda
-_2022 - Presente | São Paulo, SP_
+### Fundador & Desenvolvedor Full Stack @ Leva Code
+_2023 - Presente | Campinas, SP_
 
-Liderança técnica em projetos de alto impacto.
+Desenvolvimento de produtos digitais e soluções web para clientes.
 
-- Redução de 40% no tempo de deploy com CI/CD
-- Mentoria de 3 desenvolvedores juniores
+- Lançamento de plataformas web com Next.js e Node.js
+- Mentoria e entrega de projetos end-to-end
 
 ## Formação
 
 ### Bacharelado em Ciência da Computação
-_Universidade Exemplo · 2016 - 2020_
+_Universidade Exemplo · 2019 - 2023_
 
 ## Habilidades
 
-JavaScript, TypeScript, React, Node.js, PostgreSQL, Tailwind CSS
+JavaScript, TypeScript, React, Next.js, Node.js, PostgreSQL, Tailwind CSS
 
 ## Idiomas
 
 - Português: Nativo
-- Inglês: Fluente
+- Inglês: Intermediário
 
 ## Projetos
 
-### Projeto Open Source
-Ferramenta para desenvolvedores.
-Technologies: React, TypeScript
-[Ver no GitHub](https://github.com/seu-usuario/projeto)
-
-## Certificações
-
-- AWS Certified Developer · Amazon (2023)
+### CV Generator
+Gerador de currículo profissional a partir de Markdown ou JSON.
+Technologies: Next.js, TypeScript, Puppeteer
 `;

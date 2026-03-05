@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{nome}} - Currículo</title>
-  <!-- Apenas hex/rgb simples (sem lab/oklch/rgba) para html2canvas/PDF -->
   <style>
     * { box-sizing: border-box; color: #1e293b; }
     body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #1e293b; }
@@ -12,10 +11,11 @@
     .cv-header { background: #0f172a; background-color: #0f172a; color: #fff; padding: 2.5rem 2rem; }
     .cv-header h1 { font-size: 1.875rem; font-weight: 700; letter-spacing: -0.025em; margin: 0; color: #ffffff; }
     .cv-header .subtitle { color: #cbd5e1; font-size: 1.125rem; margin-top: 0.25rem; }
-    .cv-header .links { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin-top: 1.5rem; font-size: 0.875rem; color: #cbd5e1; }
-    .cv-header .links a { color: #cbd5e1; text-decoration: none; }
-    .cv-header .links a:hover { color: #fff; }
-    .cv-header .links span { color: #cbd5e1; }
+    .cv-header .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 1.5rem; }
+    .cv-header .link-item { display: flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: #cbd5e1; text-decoration: none; }
+    .cv-header .link-item a { color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    .cv-header .link-item a:hover { color: #fff; }
+    .cv-header .link-item svg { flex-shrink: 0; }
     .cv-body { padding: 2rem; }
     .cv-body > * + * { margin-top: 2rem; }
     .cv-section h2 { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; margin: 0 0 1rem 0; }
@@ -47,24 +47,84 @@
 </head>
 <body>
   <article class="cv-article">
-    {{!-- Header com nome e contato --}}
     <header class="cv-header" style="background-color:#0f172a;color:#fff">
       <h1>{{nome}}</h1>
       {{#if titulo}}
         <p class="subtitle">{{titulo}}</p>
       {{/if}}
+
       <div class="links">
-        <a href="mailto:{{email}}">{{email}}</a>
-        {{#if telefone}}<span>{{telefone}}</span>{{/if}}
-        {{#if localizacao}}<span>{{localizacao}}</span>{{/if}}
-        {{#if linkedin}}<a href="https://{{linkedin}}" target="_blank" rel="noopener">LinkedIn</a>{{/if}}
-        {{#if github}}<a href="https://{{github}}" target="_blank" rel="noopener">GitHub</a>{{/if}}
-        {{#if website}}<a href="{{website}}" target="_blank" rel="noopener">Website</a>{{/if}}
+        {{!-- Email --}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          <a href="mailto:{{email}}">{{email}}</a>
+        </span>
+
+        {{!-- Telefone --}}
+        {{#if telefone}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.69h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.09a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 17.5z"/>
+          </svg>
+          <span>{{telefone}}</span>
+        </span>
+        {{/if}}
+
+        {{!-- Localização --}}
+        {{#if localizacao}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>{{localizacao}}</span>
+        </span>
+        {{/if}}
+
+        {{!-- LinkedIn --}}
+        {{#if linkedin}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#94a3b8">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          <a href="https://{{linkedin}}" target="_blank" rel="noopener">LinkedIn</a>
+        </span>
+        {{/if}}
+
+        {{!-- GitHub --}}
+        {{#if github}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#94a3b8">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>
+          </svg>
+          <a href="https://{{github}}" target="_blank" rel="noopener">GitHub</a>
+        </span>
+        {{/if}}
+
+        {{!-- Instagram --}}
+        {{#if instagram}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+          </svg>
+          <a href="https://{{instagram}}" target="_blank" rel="noopener">Instagram</a>
+        </span>
+        {{/if}}
+
+        {{!-- Website --}}
+        {{#if website}}
+        <span class="link-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 1 0 20 14.5 14.5 0 0 1 0-20"/><path d="M2 12h20"/>
+          </svg>
+          <a href="{{website}}" target="_blank" rel="noopener">Website</a>
+        </span>
+        {{/if}}
       </div>
     </header>
 
     <div class="cv-body">
-      {{!-- Resumo --}}
       {{#if resumo}}
         <section class="cv-section">
           <h2>Resumo</h2>
@@ -72,7 +132,6 @@
         </section>
       {{/if}}
 
-      {{!-- Experiência --}}
       {{#if experiencias}}
         <section class="cv-section">
           <h2>Experiência profissional</h2>
@@ -100,7 +159,6 @@
         </section>
       {{/if}}
 
-      {{!-- Formação --}}
       {{#if formacao}}
         <section class="cv-section">
           <h2>Formação</h2>
@@ -116,7 +174,6 @@
         </section>
       {{/if}}
 
-      {{!-- Habilidades (lista simples) --}}
       {{#if habilidadesLista}}
         <section class="cv-section">
           <h2>Habilidades</h2>
@@ -127,7 +184,7 @@
           </div>
         </section>
       {{/if}}
-      {{!-- Habilidades por categoria --}}
+
       {{#if habilidadesCategorias}}
         <section class="cv-section">
           <h2>Habilidades</h2>
@@ -146,7 +203,6 @@
         </section>
       {{/if}}
 
-      {{!-- Idiomas --}}
       {{#if idiomas}}
         <section class="cv-section">
           <h2>Idiomas</h2>
@@ -158,7 +214,6 @@
         </section>
       {{/if}}
 
-      {{!-- Projetos --}}
       {{#if projetos}}
         <section class="cv-section">
           <h2>Projetos</h2>
@@ -184,7 +239,6 @@
         </section>
       {{/if}}
 
-      {{!-- Certificações --}}
       {{#if certificacoes}}
         <section class="cv-section">
           <h2>Certificações</h2>

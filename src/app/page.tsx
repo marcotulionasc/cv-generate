@@ -218,66 +218,64 @@ export default function Home() {
       <main className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 gap-0 px-4 py-6 sm:px-6 lg:grid-cols-2 lg:gap-6">
         {/* Left: Editor */}
         <section className="flex flex-col gap-3">
-          {/* Mode tabs + actions */}
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex rounded-lg border border-slate-200 bg-white p-0.5 shadow-sm">
+          {/* Tab bar */}
+          <div className="flex items-end justify-between gap-2">
+            {/* Tabs */}
+            <div className="flex">
               {(["markdown", "json"] as InputMode[]).map((m) => (
                 <button
                   key={m}
                   onClick={() => setMode(m)}
-                  className={`rounded-md px-4 py-1.5 text-sm font-medium transition-colors ${
-                    mode === m
-                      ? "bg-violet-600 text-white shadow-sm"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
+                  className={`relative px-5 py-2 text-sm font-medium transition-colors select-none
+                    ${mode === m
+                      ? "border border-b-white border-slate-200 bg-white text-violet-600 rounded-t-lg -mb-px z-10"
+                      : "text-slate-400 hover:text-slate-700"
+                    }`}
                 >
-                  {m === "markdown" ? "Markdown" : "JSON"}
+                  {m === "markdown" ? "📝 .md" : "{ } JSON"}
                 </button>
               ))}
             </div>
-            <button
-              onClick={generatePreview}
-              disabled={loadingPreview}
-              className="flex items-center gap-1.5 rounded-md bg-slate-900 px-4 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-slate-800 disabled:opacity-60"
-            >
-              {loadingPreview ? (
-                <>
-                  <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                  </svg>
-                  Gerando…
-                </>
-              ) : (
-                <>
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                  Gerar preview
-                </>
-              )}
-            </button>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2 pb-0.5">
+              <FileUploadZone onFile={handleFileUpload} />
+              <button
+                onClick={generatePreview}
+                disabled={loadingPreview}
+                className="flex items-center gap-1.5 rounded-md bg-slate-900 px-4 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-slate-800 disabled:opacity-60"
+              >
+                {loadingPreview ? (
+                  <>
+                    <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                    </svg>
+                    Gerando…
+                  </>
+                ) : (
+                  <>
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    Gerar preview
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
-          {/* File upload */}
-          <FileUploadZone onFile={handleFileUpload} />
-
-          {/* Hint */}
-          <p className="text-xs text-slate-400">
-            {mode === "markdown"
-              ? "Escreva seu CV em Markdown. Use # Nome, ## Experiência, ## Formação, etc."
-              : "Cole ou edite o JSON com os dados do currículo."}
-          </p>
-
-          {/* Textarea */}
-          <textarea
-            value={currentInput}
-            onChange={(e) => setCurrentInput(e.target.value)}
-            className="min-h-[520px] w-full flex-1 rounded-lg border border-slate-200 bg-white p-3 font-mono text-sm text-slate-800 shadow-inner focus:border-violet-400 focus:outline-none focus:ring-1 focus:ring-violet-400"
-            placeholder={mode === "markdown" ? "# Seu Nome\n> Título\n\n**Email:** ..." : '{"nome": "...", "email": "..."}'}
-            spellCheck={false}
-          />
+          {/* Tab panel */}
+          <div className="rounded-b-lg rounded-tr-lg border border-slate-200 bg-white shadow-sm">
+            <textarea
+              value={currentInput}
+              onChange={(e) => setCurrentInput(e.target.value)}
+              className="min-h-[540px] w-full rounded-b-lg rounded-tr-lg bg-white p-4 font-mono text-sm text-slate-800 focus:outline-none resize-none"
+              placeholder={mode === "markdown" ? "# Seu Nome\n> Título\n\n**Email:** ..." : '{"nome": "...", "email": "..."}'}
+              spellCheck={false}
+            />
+          </div>
 
           {error && (
             <div className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
@@ -288,11 +286,11 @@ export default function Home() {
             </div>
           )}
 
-          {/* Format guide */}
+          {/* Format guide — só aparece na aba .md */}
           {mode === "markdown" && (
             <details className="rounded-lg border border-slate-200 bg-white text-xs text-slate-500 shadow-sm">
               <summary className="cursor-pointer px-3 py-2 font-medium text-slate-600 select-none">
-                Formato do Markdown
+                Ver formato do .md
               </summary>
               <pre className="overflow-x-auto px-3 pb-3 leading-relaxed">{`# Nome Completo
 > Título Profissional
@@ -369,8 +367,8 @@ Technologies: React, TypeScript
       </main>
 
       <footer className="border-t border-slate-200 bg-white py-3 text-center text-xs text-slate-400">
-        PDF gerado server-side com Puppeteer · Template .hbs customizável em{" "}
-        <code className="rounded bg-slate-100 px-1">src/templates/default.hbs</code>
+        Powered by{" "}
+        <span className="font-semibold text-slate-600">Leva Code</span>
       </footer>
     </div>
   );
