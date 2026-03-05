@@ -1,4 +1,4 @@
-# Gerador de CV (Next.js + Handlebars + Tailwind)
+# Gerador de CV
 
 Gerador de currículo em HTML usando templates **Handlebars** (`.hbs`) e **Tailwind CSS**. Você edita os dados em JSON e o layout no template para gerar um CV organizado e bonito para suas candidaturas.
 
